@@ -1,0 +1,96 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "lanchonet-APIG",
+    "version" : "2024-11-30 14:16:15UTC"
+  },
+  "servers" : [ {
+    "url" : "https://kkx29hx286.execute-api.us-east-1.amazonaws.com/{basePath}",
+    "variables" : {
+      "basePath" : {
+        "default" : ""
+      }
+    }
+  } ],
+  "paths" : {
+    "/{proxy+}" : {
+      "parameters" : [ {
+        "name" : "proxy+",
+        "in" : "path",
+        "description" : "Generated path parameter for proxy+",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      } ],
+      "x-amazon-apigateway-any-method" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for ANY /{proxy+}"
+          }
+        },
+        "security" : [ {
+          "authorizeWithLambda" : [ ]
+        } ],
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "1.0",
+          "type" : "http_proxy",
+          "httpMethod" : "ANY",
+          "uri" : "http://ad0c7ae2da7f44336a3ce67353b566c4-555163455.us-east-1.elb.amazonaws.com/{proxy}",
+          "connectionType" : "INTERNET",
+          "timeoutInMillis" : 30000
+        }
+      }
+    },
+    "/login" : {
+      "post" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for POST /login"
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:809791310389:function:auth-user/invocations",
+          "connectionType" : "INTERNET"
+        }
+      }
+    },
+    "/signup" : {
+      "post" : {
+        "responses" : {
+          "default" : {
+            "description" : "Default response for POST /signup"
+          }
+        },
+        "x-amazon-apigateway-integration" : {
+          "payloadFormatVersion" : "2.0",
+          "type" : "aws_proxy",
+          "httpMethod" : "POST",
+          "uri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:809791310389:function:create-user/invocations",
+          "connectionType" : "INTERNET"
+        }
+      }
+    }
+  },
+  "components" : {
+    "securitySchemes" : {
+      "authorizeWithLambda" : {
+        "type" : "apiKey",
+        "name" : "Unused",
+        "in" : "header",
+        "x-amazon-apigateway-authorizer" : {
+          "identitySource" : "",
+          "authorizerUri" : "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:809791310389:function:validate-routes/invocations",
+          "authorizerPayloadFormatVersion" : "2.0",
+          "authorizerResultTtlInSeconds" : 0,
+          "type" : "request",
+          "enableSimpleResponses" : true
+        }
+      }
+    }
+  },
+  "x-amazon-apigateway-importexport-version" : "1.0"
+}
